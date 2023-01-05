@@ -49,7 +49,7 @@ Axle<WheelType>::Axle(physics::ModelPtr &_model,
 }
 
 template<class WheelType>
-const ignition::math::Vector3<double> &Axle<WheelType>::getAxlePos() const {
+const ignition::math::Vector3d &Axle<WheelType>::getAxlePos() const {
     return axlePos;
 }
 

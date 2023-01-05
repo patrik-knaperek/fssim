@@ -19,7 +19,6 @@
     <depend>fssim_gazebo_plugins</depend>
     <depend>fssim_rqt_plugins</depend>
     <depend>fssim-shapely</depend>
-    <depend>fssim-subprocess32</depend>
     <depend>fssim-xacro</depend>
     <depend>fssim-rviz</depend>
 

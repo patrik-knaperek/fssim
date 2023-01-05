@@ -1,2 +1,5 @@
 # Ignore compiled python
 *.pyc 
+
+# Ignore auto-generated files
+fssim_gazebo/models/track/model.config

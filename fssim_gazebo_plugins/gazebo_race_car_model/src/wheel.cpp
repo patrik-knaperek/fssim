@@ -73,7 +73,7 @@ double Wheel::getFy(const double alpha, const double Fz) {
     return Fy;
 }
 
-const ignition::math::Vector3<double> &Wheel::getCenterPos() const { return center_pos_; }
+const ignition::math::Vector3d &Wheel::getCenterPos() const { return center_pos_; }
 
 }  // namespace fssim
 }  // namespace gazebo

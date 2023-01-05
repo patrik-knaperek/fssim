@@ -68,7 +68,7 @@ class Wheel {
 
     virtual void setAngle(const double delta) {}
 
-    const ignition::math::Vector3<double> &getCenterPos() const;
+    const ignition::math::Vector3d &getCenterPos() const;
 
  private:
 
@@ -81,7 +81,7 @@ class Wheel {
     Param::Tire param_;                 // Pacejka Tire parameters
     double      radius;                      // Radious of the tire from STL [m]
 
-    ignition::math::Vector3<double> center_pos_;  // Center location of the tire
+    ignition::math::Vector3d center_pos_;  // Center location of the tire
 };
 
 }  // namespace fssim

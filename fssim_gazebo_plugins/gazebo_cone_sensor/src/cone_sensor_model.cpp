@@ -41,6 +41,8 @@
 #include "gazebo_utils/include/ros_utills.hpp"
 #include "gazebo_utils/include/gazebo_utills.hpp"
 
+#include <regex>
+
 namespace YAML {
 template<>
 struct convert<gazebo::ConeSensorModel::Config> {
@@ -195,11 +197,14 @@ void ConeSensorModel::updateTrack() {
         const auto child  = model_->GetChild(i);
         const auto entity = boost::dynamic_pointer_cast<gazebo::physics::Entity>(child);
 
-        if (entity->GetName() == "cone_left::link") {
+        //if (entity->GetName() == "cone_left::link") {
+        if (std::regex_match(entity->GetName(), std::regex("cone_left_[0-9]+::link"))) {
             left_.push_back(entity);
-        } else if (entity->GetName() == "cone_right::link") {
+        } //else if (entity->GetName() == "cone_right::link") {
+        else if (std::regex_match(entity->GetName(), std::regex("cone_right_[0-9]+::link"))) {
             right_.push_back(entity);
-        } else if (entity->GetName() == "cone_orange::link" or entity->GetName() == "cone_orange_big::link") {
+        } //else if (entity->GetName() == "cone_orange::link" or entity->GetName() == "cone_orange_big::link") {
+        else if (std::regex_match(entity->GetName(), std::regex("cone_orange_[0-9]+::link")) or std::regex_match(entity->GetName(), std::regex("cone_orange_big_[0-9]+::link"))) {
             orange_.push_back(entity);
         }
     }

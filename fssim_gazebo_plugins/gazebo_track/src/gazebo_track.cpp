@@ -37,6 +37,8 @@
 #include "visualization_msgs/MarkerArray.h"
 #include "fssim_common/Track.h"
 
+#include <regex>
+
 namespace gazebo {
 
 class TrackStreamer : public ModelPlugin {
@@ -126,17 +128,21 @@ class TrackStreamer : public ModelPlugin {
         std::vector<boost::shared_ptr<gazebo::physics::Entity>> orange_big;
         std::vector<boost::shared_ptr<gazebo::physics::Entity>> tk_device_start;
         std::vector<boost::shared_ptr<gazebo::physics::Entity>> tk_device_end;
-        for (unsigned int                                       i = 0; i < model->GetChildCount(); ++i) {
+        for (unsigned int i = 0; i < model->GetChildCount(); ++i) {
             const auto child  = model->GetChild(i);
             const auto entity = boost::dynamic_pointer_cast<gazebo::physics::Entity>(child);
             const auto name   = entity->GetName();
-            if (name == "cone_left::link") {
+            //if (name == "cone_left::link") {
+            if (std::regex_match(name, std::regex("cone_left_[0-9]+::link"))) {
                 left.push_back(entity);
-            } else if (name == "cone_right::link") {
+            //} else if (name == "cone_right::link") {
+            } else if (std::regex_match(name, std::regex("cone_right_[0-9]+::link"))) {
                 right.push_back(entity);
-            } else if (name == "cone_orange::link") {
+            //} else if (name == "cone_orange::link") {
+            } else if (std::regex_match(name, std::regex("cone_orange_[0-9]+::link"))) {
                 orange.push_back(entity);
-            } else if (name == "cone_orange_big::link") {
+            //} else if (name == "cone_orange_big::link") {
+            } else if (std::regex_match(name, std::regex("cone_orange_big_[0-9]+::link"))) {                
                 orange_big.push_back(entity);
             } else if (name.find("tk_device") != std::string::npos) {
                 if (name.find("0") != std::string::npos or name.find("1") != std::string::npos) {

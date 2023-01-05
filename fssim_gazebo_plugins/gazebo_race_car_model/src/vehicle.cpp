@@ -185,6 +185,7 @@ State Vehicle::f(const State &x,
 
 std::ostream &operator<<(std::ostream &os, const State s) {
     os << s.getString();
+    return os;
 }
 
 State Vehicle::f_kin_correction(const State &x_in,
@@ -223,6 +224,11 @@ void Vehicle::publishTf(const State &x) {
 
     // Send TF
     tf_br_.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "/fssim_map", "/fssim/vehicle/base_link"));
+    ros::Time tf_time = ros::Time::now();
+    if (last_tf_time_ < tf_time) {
+        tf_br_.sendTransform(tf::StampedTransform(transform, tf_time, "/fssim_map", "/fssim/vehicle/base_link"));
+        last_tf_time_ = tf_time;
+    }
 }
 
 double Vehicle::getFx(const State &x, const Input &u) {
@@ -261,8 +267,8 @@ double Vehicle::getNormalForce(const State &x) {
 
 void Vehicle::setModelState(const State &x) {
     const ignition::math::Pose3d    pose(x.x, x.y, 0.0, 0, 0.0, x.yaw);
-    const ignition::math::Vector3<double> vel(x.v_x, x.v_y, 0.0);
-    const ignition::math::Vector3<double> angular(0.0, 0.0, x.r);
+    const ignition::math::Vector3d vel(x.v_x, x.v_y, 0.0);
+    const ignition::math::Vector3d angular(0.0, 0.0, x.r);
     model->SetWorldPose(pose);
     model->SetAngularVel(angular);
     model->SetLinearVel(vel);
