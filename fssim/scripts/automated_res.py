@@ -126,13 +126,10 @@ class AutomatedRes:
         self.mission = Mission()
         if "skidpad" in self.sim_config['repetitions'][self.sim_config_id]['track_name']:
             self.mission.mission = "skidpad"
-            self.checks_is_in_track = False
         elif "acceleration" in self.sim_config['repetitions'][self.sim_config_id]['track_name']:
             self.mission.mission = "acceleration"
-            self.checks_is_in_track = False
         elif "calibration" in self.sim_config['repetitions'][self.sim_config_id]['track_name']:
             self.mission.mission = "calibration"
-            self.checks_is_in_track = True
         else:
             self.mission.mission = "trackdrive"
 
@@ -142,7 +139,7 @@ class AutomatedRes:
         self.output_folder = arg.output
         self.statistics = LapStaticstic(self.output_folder, self.mission.mission)
 
-        self.track_checks = VehiclePositionCheck(self.mission.mission, self.checks_is_in_track)
+        self.track_checks = VehiclePositionCheck(self.mission.mission, not self.checks_is_in_track)
 
         signal.signal(signal.SIGINT, self.signal_handler)
 

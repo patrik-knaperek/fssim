@@ -157,23 +157,26 @@ class VehiclePositionCheck:
         return pos[0] <= size and pos[0] >= -size and pos[1] <= size and pos[1] >= -size
 
     def is_all_car_in_out_of_track(self):
-        if self.mission == 'trackdrive':
-            # All 4 wheels must be in track in order to declare it fully in track
-            is_left_front = is_inside(self.get_trans("left_front_wheel"), self.polygon_outside, self.polygon_inside)
-            is_right_front = is_inside(self.get_trans("right_front_wheel"), self.polygon_outside, self.polygon_inside)
-            is_right_rear = is_inside(self.get_trans("right_rear_wheel"), self.polygon_outside, self.polygon_inside)
-            is_left_rear = is_inside(self.get_trans("left_rear_wheel"), self.polygon_outside, self.polygon_inside)
-            return is_left_front or is_right_front or is_right_rear or is_left_rear
-        elif self.mission == 'acceleration':
-            is_right_from_left_cones = self.is_car_right_from_line(self.cones_left)
-            is_left_from_right_cones = self.is_car_left_from_line(self.cones_right)
-            return is_right_from_left_cones and is_left_from_right_cones
-        elif self.mission == 'skidpad':
-            left_front_wheel = self.in_bounding_box(self.get_trans("left_front_wheel"))
-            right_front_wheel = self.in_bounding_box(self.get_trans("right_front_wheel"))
-            right_rear_wheel = self.in_bounding_box(self.get_trans("right_rear_wheel"))
-            left_rear_wheel = self.in_bounding_box(self.get_trans("left_rear_wheel"))
-            return left_front_wheel and right_front_wheel and right_rear_wheel and left_rear_wheel
+        if self.ignore_track_check == True:
+            return True
+        else:
+            if self.mission == 'trackdrive':
+                # All 4 wheels must be in track in order to declare it fully in track
+                is_left_front = is_inside(self.get_trans("left_front_wheel"), self.polygon_outside, self.polygon_inside)
+                is_right_front = is_inside(self.get_trans("right_front_wheel"), self.polygon_outside, self.polygon_inside)
+                is_right_rear = is_inside(self.get_trans("right_rear_wheel"), self.polygon_outside, self.polygon_inside)
+                is_left_rear = is_inside(self.get_trans("left_rear_wheel"), self.polygon_outside, self.polygon_inside)
+                return is_left_front or is_right_front or is_right_rear or is_left_rear
+            elif self.mission == 'acceleration':
+                is_right_from_left_cones = self.is_car_right_from_line(self.cones_left)
+                is_left_from_right_cones = self.is_car_left_from_line(self.cones_right)
+                return is_right_from_left_cones and is_left_from_right_cones
+            elif self.mission == 'skidpad':
+                left_front_wheel = self.in_bounding_box(self.get_trans("left_front_wheel"))
+                right_front_wheel = self.in_bounding_box(self.get_trans("right_front_wheel"))
+                right_rear_wheel = self.in_bounding_box(self.get_trans("right_rear_wheel"))
+                left_rear_wheel = self.in_bounding_box(self.get_trans("left_rear_wheel"))
+                return left_front_wheel and right_front_wheel and right_rear_wheel and left_rear_wheel
 
     def callback_track(self, data):
         '''
