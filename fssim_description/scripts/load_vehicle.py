@@ -5,12 +5,12 @@ import xacro
 import subprocess
 
 def load_robot_description():
-    sensors_config_file =   rospy.get_param('/fssim/sensors_config_file')
-    car_config_file     =   rospy.get_param('/fssim/car_config_file')
-    car_dimensions_file =   rospy.get_param('/fssim/car_structure_file')
-    robot_name          =   rospy.get_param('/fssim/robot_name')
+    sensors_config_file =   rospy.get_param('fssim/sensors_config_file')
+    car_config_file     =   rospy.get_param('fssim/car_config_file')
+    car_dimensions_file =   rospy.get_param('fssim/car_structure_file')
+    robot_name          =   rospy.get_param('fssim/robot_name')
 
-    model_filepath = rospy.get_param('/fssim/model_filepath')
+    model_filepath = rospy.get_param('fssim/model_filepath')
 
     print(sensors_config_file)
     print(car_config_file)
@@ -25,7 +25,7 @@ def load_robot_description():
         rospy.logfatal('Failed to run xacro command with error: \n%s', process_error.output)
         sys.exit(1)
 
-    rospy.set_param("/robot_description", robot_description)
+    rospy.set_param("robot_description", robot_description)
 
 if __name__ == '__main__':
     try:

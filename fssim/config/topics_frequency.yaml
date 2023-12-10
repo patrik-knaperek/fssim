@@ -23,11 +23,11 @@
 precision: 10 # In percent
 
 topics:
-    -   topic: "/fssim/base_pose_ground_truth"
+    -   topic: "fssim/base_pose_ground_truth"
         expected_frequency: 50
-    -   topic: "/lidar/cones"
+    -   topic: "lidar/cones"
         expected_frequency: 5
-    -   topic: "/fssim/cmd"
+    -   topic: "fssim/cmd"
         expected_frequency: 100
 
 

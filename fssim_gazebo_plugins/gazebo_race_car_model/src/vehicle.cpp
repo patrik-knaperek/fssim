@@ -41,13 +41,14 @@ Vehicle::Vehicle(physics::ModelPtr &_model,
       aero_(param_.aero) {
 
     // ROS Publishers
-    pub_ground_truth_ = nh->advertise<fssim_common::State>("/fssim/base_pose_ground_truth", 1);
-    pub_car_info_     = nh->advertise<fssim_common::CarInfo>("/fssim/car_info", 1);
+    ROS_WARN("***********HERE************");
+    pub_ground_truth_ = nh->advertise<fssim_common::State>("fssim/base_pose_ground_truth", 1);
+    pub_car_info_     = nh->advertise<fssim_common::CarInfo>("fssim/car_info", 1);
 
     // ROS Subscribers
-    sub_res_          = nh->subscribe("/fssim/res_state", 1, &Vehicle::onRes, this);
-    sub_cmd_          = nh->subscribe("/fssim/cmd", 1, &Vehicle::onCmd, this);
-    sub_initial_pose_ = nh->subscribe("/initialpose", 1, &Vehicle::onInitialPose, this);
+    sub_res_          = nh->subscribe("fssim/res_state", 1, &Vehicle::onRes, this);
+    sub_cmd_          = nh->subscribe("fssim/cmd", 1, &Vehicle::onCmd, this);
+    sub_initial_pose_ = nh->subscribe("initialpose", 1, &Vehicle::onInitialPose, this);
 
     // Initializatoin
     initModel(_sdf);
@@ -225,7 +226,7 @@ void Vehicle::publishTf(const State &x) {
     // Send TF
     ros::Time tf_time = ros::Time::now();
     if (last_tf_time_ < tf_time) {
-        tf_br_.sendTransform(tf::StampedTransform(transform, tf_time, "/fssim_map", "/fssim/vehicle/base_link"));
+        tf_br_.sendTransform(tf::StampedTransform(transform, tf_time, "fssim_map", "fssim/vehicle/base_link"));
         last_tf_time_ = tf_time;
     }
 }

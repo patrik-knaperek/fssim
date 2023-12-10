@@ -86,7 +86,7 @@ class AutomatedRes:
     def __init__(self, arg):
 
         # Use sim clock
-        rospy.set_param('/use_sim_time', 'true')
+        rospy.set_param('use_sim_time', 'true')
 
         # TF Initializations
         self.listener = tf.TransformListener()
@@ -99,15 +99,15 @@ class AutomatedRes:
         self.ecu = Ecu()
 
         # ROS Subscribers
-        self.sub_topics_health = rospy.Subscriber('/fssim/topics_health', TopicsHealth, self.callback_topics_health)
-        self.sub_state = rospy.Subscriber('/fssim/base_pose_ground_truth', State, self.callback_state)
-        self.sub_mission_finished = rospy.Subscriber('/fssim/mission_finished', Mission, self.callback_mission_finished)
+        self.sub_topics_health = rospy.Subscriber('fssim/topics_health', TopicsHealth, self.callback_topics_health)
+        self.sub_state = rospy.Subscriber('fssim/base_pose_ground_truth', State, self.callback_state)
+        self.sub_mission_finished = rospy.Subscriber('fssim/mission_finished', Mission, self.callback_mission_finished)
 
         # ROS Publishers
-        self.pub_res = rospy.Publisher('/fssim/res_state', ResState, queue_size = 1)
-        self.pub_health = rospy.Publisher('/fssim/health', SimHealth, queue_size = 1)
-        self.pub_mission = rospy.Publisher('/fssim/mission', Mission, queue_size = 1, latch = True)
-        self.pub_initialpose = rospy.Publisher('/initialpose', PoseWithCovarianceStamped, queue_size = 1)
+        self.pub_res = rospy.Publisher('fssim/res_state', ResState, queue_size = 1)
+        self.pub_health = rospy.Publisher('fssim/health', SimHealth, queue_size = 1)
+        self.pub_mission = rospy.Publisher('fssim/mission', Mission, queue_size = 1, latch = True)
+        self.pub_initialpose = rospy.Publisher('initialpose', PoseWithCovarianceStamped, queue_size = 1)
 
         with open(arg.config, 'r') as f:
             self.sim_config = yaml.load(f, Loader=yaml.FullLoader)
@@ -202,7 +202,7 @@ class AutomatedRes:
                 rospy.sleep(0.5)
 
             # Stop sim after max time achieved
-            time_expired = self.sim_time_expired()
+            # time_expired = self.sim_time_expired()
 
             # If we do too many laps stop as well
             request_stop_given_mission = self.statistics.request_stop()
@@ -424,7 +424,7 @@ class AutomatedRes:
 
     def get_trans(self, target):
         try:
-            (trans, rot) = self.listener.lookupTransform('/fssim_map', '/fssim/vehicle/' + target, rospy.Time(0))
+            (trans, rot) = self.listener.lookupTransform('fssim_map', 'fssim/vehicle/' + target, rospy.Time(0))
         except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
             # rospy.logwarn("Could not find transform from %s to %s", 'fssim_map', 'fluela/base_link')
             rospy.sleep(1)

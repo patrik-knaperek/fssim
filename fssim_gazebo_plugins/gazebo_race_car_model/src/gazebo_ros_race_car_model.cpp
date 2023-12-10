@@ -39,6 +39,7 @@ RaceCarModelPlugin::RaceCarModelPlugin()
     char *argv = nullptr;
     ros::init(argc, &argv, "RaceCarModelPlugin");
     this->dataPtr->rosnode = boost::shared_ptr<ros::NodeHandle>(new ros::NodeHandle());
+    ROS_WARN_STREAM("gazebo plugin node namespace: " << this->dataPtr->rosnode->getNamespace());
 }
 
 RaceCarModelPlugin::~RaceCarModelPlugin() {
@@ -46,6 +47,13 @@ RaceCarModelPlugin::~RaceCarModelPlugin() {
 }
 
 void RaceCarModelPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
+    // Print at the beginning of the function
+    ROS_WARN("RaceCarModelPlugin::Load function called.");
+    // Print model and SDF information
+    
+    ROS_WARN_STREAM("Model Name: " << _model->GetName());
+    ROS_WARN_STREAM("SDF XML:\n" << _sdf->ToString(""));
+
     gzmsg << "Loading RaceCarModelPlugin" << std::endl;
     gzmsg << "RaceCarModelPlugin loading params" << std::endl;
 
@@ -75,7 +83,6 @@ void RaceCarModelPlugin::Reset() {
 
 void RaceCarModelPlugin::update() {
     std::lock_guard<std::mutex> lock(this->dataPtr->mutex);
-
     publishInfo();
 
     common::Time curTime = this->dataPtr->world->SimTime();

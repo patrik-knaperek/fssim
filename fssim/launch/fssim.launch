@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <launch>
+    <!--<arg name="ns" default="sim1"/>-->
     <arg name="robot_name" default="gotthard" />
     <arg name="world_name" default="$(find fssim_gazebo)/worlds/track.world"/>
 
@@ -7,13 +8,19 @@
     <arg name="car_config_file"     default="$(find fssim_description)/cars/$(arg robot_name)/config/car.yaml"/>
     <arg name="car_dimensions_file" default="$(find fssim_description)/cars/$(arg robot_name)/config/distances.yaml"/>
 
+    <rosparam command="load" file="$(arg car_config_file)"/>
+
     <!-- Gazebo -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <arg name="verbose" value="true"/>
         <arg name="world_name" value="$(arg world_name)"/>
         <arg name="gui" value="false"/>
         <arg name="debug" value="false"/>
+        <arg name="output" value="screen"/>
     </include>
+
+    <!--<remap from="tf" to="$(arg ns)/tf"/>-->
+    <!--<remap from="tf_static" to="$(arg ns)/tf_static"/>-->
 
     <!-- Model -->
     <include file="$(find fssim_gazebo)/launch/car_model_gazebo.launch">

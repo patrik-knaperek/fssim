@@ -94,7 +94,7 @@ class MonitorTopics():
 
     def __init__(self, topics_frequency):
         self.topics_health = TopicsHealth()
-        self.pub_topics_health = rospy.Publisher("/fssim/topics_health", TopicsHealth, queue_size=1)
+        self.pub_topics_health = rospy.Publisher("fssim/topics_health", TopicsHealth, queue_size=1)
         for i, t in enumerate(topics_frequency):
             self.topics_health.topics_check.append(toRos(t))
 

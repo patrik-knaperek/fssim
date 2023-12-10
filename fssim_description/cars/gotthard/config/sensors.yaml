@@ -24,7 +24,7 @@
 
 stream_track:
   enabled: true
-  markers: "/fssim/track"
+  markers: "fssim/track"
 
 
 sensors:
@@ -44,7 +44,7 @@ sensors:
   lidar_pipeline:
     enabled: true
     node_name: lidar_pipeline             # This name MUST BE the SAME to this section yaml file
-    topic_name: /lidar/cones              # Where should the cones be published
+    topic_name: lidar/cones              # Where should the cones be published
 
     overwrite:
       enabled: true
@@ -83,7 +83,7 @@ sensors:
   camera_pipeline:
     enabled: true
     node_name: camera_pipeline
-    topic_name: /camera/cones
+    topic_name: camera/cones
     overwrite:
       enabled: true
       frame: fssim/vehicle/base_link      # Frame the cones are represented in

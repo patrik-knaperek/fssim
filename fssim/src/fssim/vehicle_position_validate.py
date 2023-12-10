@@ -101,7 +101,7 @@ class VehiclePositionCheck:
     def __init__(self, mission, ignore_track_check, track_details = None):
 
         # ROS Subscribers
-        self.sub_track = rospy.Subscriber('/fssim/track', Track, self.callback_track)
+        self.sub_track = rospy.Subscriber('fssim/track', Track, self.callback_track)
 
         self.received_track = False
         self.ignore_track_check = ignore_track_check
@@ -132,7 +132,7 @@ class VehiclePositionCheck:
 
     def get_trans(self, target):
         try:
-            (trans, rot) = self.listener.lookupTransform('/fssim_map', '/fssim/vehicle/' + target, rospy.Time(0))
+            (trans, rot) = self.listener.lookupTransform('fssim_map', 'fssim/vehicle/' + target, rospy.Time(0))
         except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
             # rospy.logwarn("Could not find transform from %s to %s", 'fssim_map', 'fluela/base_link')
             rospy.sleep(1)

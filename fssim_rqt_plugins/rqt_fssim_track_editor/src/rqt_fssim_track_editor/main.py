@@ -153,7 +153,7 @@ class TrackEditorPlugin(Plugin):
             self._topics_for_snpshot_found = True
 
     def handle_btn_read_snaps(self):
-        # self._cones_view.snapshots.import_snapshots(name[0],'/lidar_mode1/cones')
+        # self._cones_view.snapshots.import_snapshots(name[0],'lidar_mode1/cones')
         self._cones_view.change_view(2)
         # self._widget.horSlid_snap.setMaximum(self._cones_view.snapshots.max)
 

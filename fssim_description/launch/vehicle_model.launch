@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
     <arg name="robot_name" default="fluela"/>
-    <param name="tf_prefix" value="/fssim/vehicle"/>
+    <param name="tf_prefix" value="fssim/vehicle"/>
 
     <arg name="sensors_config_file" default="$(find fssim_description)/cars/$(arg robot_name)/config/sensors.yaml"/>
     <arg name="car_config_file"     default="$(find fssim_description)/cars/$(arg robot_name)/config/car.yaml"/>
@@ -17,7 +17,7 @@
     <!-- convert joint states to TF transforms for rviz, etc -->
     <node name="fssim_robot_state_publisher" output="screen" pkg="robot_state_publisher" respawn="false" type="robot_state_publisher">
         <param name="publish_frequency" value="100"/>
-        <remap from="/joint_states" to="/fssim/joint_states"/>
+        <remap from="joint_states" to="fssim/joint_states"/>
     </node>
 
 </launch>

@@ -84,7 +84,7 @@ class SnapshotHandler():
         self.list_snapshots = []
         self.states = np.zeros((0, 3))
         count = 0
-        state_topic = '/slam/pose'
+        state_topic = 'slam/pose'
         for topic, msg, t in bag.read_messages([topic_name,state_topic]):
             if topic == topic_name:
                 self.list_snapshots.append(msg)

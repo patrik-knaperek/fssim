@@ -94,7 +94,7 @@ ConeSensorModel::ConeSensorModel(ros::NodeHandle &_node) :
     nh_(_node),
     point_cloud_(),
     loaded_sacesfully_(false) {
-    vehicle_frame_ = "/base_link";
+    vehicle_frame_ = "base_link";
 }
 
 bool ConeSensorModel::load(const physics::ModelPtr &model, const sdf::ElementPtr &_sdf) {
@@ -155,7 +155,7 @@ void ConeSensorModel::update() {
     point_cloud_.height          = static_cast<uint32_t>(point_cloud_.points.size());
 
     PointCloud point_cloud_transformed;
-    if (!pcl_ros::transformPointCloud(config.transfer_to_frame, time_now, point_cloud_, "/fssim_map", point_cloud_transformed,
+    if (!pcl_ros::transformPointCloud(config.transfer_to_frame, time_now, point_cloud_, "fssim_map", point_cloud_transformed,
                                       listener_)) {}
 
     point_cloud_transformed.header.frame_id = config.transfer_to_frame; // This is required because of pcl_ros bug
@@ -322,8 +322,8 @@ void ConeSensorModel::print(const std::vector<Eigen::Vector2d> &vect) const {
 bool ConeSensorModel::getState(const ros::Time &now, Eigen::Vector3d &p) const {
     tf::StampedTransform transform;
     try {
-//        listener_.waitForTransform("/fssim_map", vehicle_frame_, now, ros::Duration(5.0));
-        listener_.lookupTransform("/fssim_map", vehicle_frame_, now, transform);
+//        listener_.waitForTransform("fssim_map", vehicle_frame_, now, ros::Duration(5.0));
+        listener_.lookupTransform("fssim_map", vehicle_frame_, now, transform);
     } catch (tf::TransformException &ex) {
         return false;
     }
