@@ -15,7 +15,7 @@
                                                 car_dimensions_file:='$(arg car_dimensions_file)'" />
 
     <!-- convert joint states to TF transforms for rviz, etc -->
-    <node name="fssim_robot_state_publisher" output="screen" pkg="robot_state_publisher" respawn="false" type="robot_state_publisher">
+    <node name="fssim_robot_state_publisher" pkg="robot_state_publisher" respawn="false" type="robot_state_publisher">
         <param name="publish_frequency" value="100"/>
         <remap from="joint_states" to="fssim/joint_states"/>
     </node>

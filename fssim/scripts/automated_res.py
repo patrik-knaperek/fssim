@@ -202,7 +202,7 @@ class AutomatedRes:
                 rospy.sleep(0.5)
 
             # Stop sim after max time achieved
-            # time_expired = self.sim_time_expired()
+            time_expired = self.sim_time_expired()
 
             # If we do too many laps stop as well
             request_stop_given_mission = self.statistics.request_stop()
