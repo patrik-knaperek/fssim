@@ -39,7 +39,6 @@
 #include "fssim_common/State.h"
 #include "nav_msgs/Odometry.h"
 #include "geometry_msgs/PoseWithCovarianceStamped.h"
-#include "visualization_msgs/Marker.h"
 
 // Utills
 #include "gazebo_utils/include/gazebo_to_ros.hpp"
