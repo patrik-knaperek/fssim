@@ -83,8 +83,8 @@ class LapStaticstic:
             self.report_file_name = folder + '/output.yaml'
 
     def request_stop(self):
-        if self.mission == 'trackdrive':
-            return self.lap_count > 110
+        # if self.mission == 'trackdrive':
+        #     return self.lap_count > 110
         return False
 
     def is_mission_finnished(self):
