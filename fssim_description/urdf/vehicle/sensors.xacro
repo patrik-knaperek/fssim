@@ -29,6 +29,19 @@
     </xacro:macro>
 
     <xacro:macro name="camera_pipeline">
+        <!-- Sensor links and fixed joints -->
+        <link name="camera_center_link">
+            <inertial>
+                <mass value="1"/>
+                <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+            </inertial>
+        </link>
+        <joint name="camera_center_joint" type="fixed">
+            <parent link="chassis"/>
+            <child link="camera_center_link"/>
+            <origin xyz="${sensors['camera']['pos']['x']} 0.0 0.15" rpy="0 0 0"/>
+        </joint>
+        
         <gazebo>
             <plugin name="camera_pipeline" filename="libgazebo_cone_sensor.so">
                 <yaml_config>$(arg sensors_config_file)</yaml_config>

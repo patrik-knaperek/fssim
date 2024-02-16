@@ -155,10 +155,10 @@ void ConeSensorModel::update() {
     point_cloud_.height          = static_cast<uint32_t>(point_cloud_.points.size());
 
     PointCloud point_cloud_transformed;
-    if (!pcl_ros::transformPointCloud(vehicle_frame_, time_now, point_cloud_, "/fssim_map", point_cloud_transformed,
+    if (!pcl_ros::transformPointCloud(config.transfer_to_frame, time_now, point_cloud_, "/fssim_map", point_cloud_transformed,
                                       listener_)) {}
 
-    point_cloud_transformed.header.frame_id = vehicle_frame_; // This is required because of pcl_ros bug
+    point_cloud_transformed.header.frame_id = config.transfer_to_frame; // This is required because of pcl_ros bug
 
     addRadialNoise(point_cloud_transformed);
 
@@ -167,7 +167,7 @@ void ConeSensorModel::update() {
                                                      return c.x < config.cut_cones_below_x;
                                                  }), point_cloud_transformed.end());
 
-    if (config.overwrite_transfer_to_frame) { point_cloud_transformed.header.frame_id = config.transfer_to_frame; }
+    // if (config.overwrite_transfer_to_frame) { point_cloud_transformed.header.frame_id = config.transfer_to_frame; }
 
     pub_cones_.publish(point_cloud_transformed);
 }
