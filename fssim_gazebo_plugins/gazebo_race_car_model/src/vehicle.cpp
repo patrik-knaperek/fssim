@@ -41,7 +41,6 @@ Vehicle::Vehicle(physics::ModelPtr &_model,
       aero_(param_.aero) {
 
     // ROS Publishers
-    ROS_WARN("***********HERE************");
     pub_ground_truth_ = nh->advertise<fssim_common::State>("fssim/base_pose_ground_truth", 1);
     pub_car_info_     = nh->advertise<fssim_common::CarInfo>("fssim/car_info", 1);
 
@@ -142,7 +141,7 @@ void Vehicle::update(const double dt) {
     state_pub.r += noise::getGaussianNoise(0.0, param_.sensors.noise_r_sigma);
     pub_ground_truth_.publish(state_pub);
 
-    publishCarInfo(alphaF, alphaR, FyF, FyR, Fx);
+    publishCarInfo(x_dot_dyn, alphaF, alphaR, FyF, FyR, Fx);
 }
 
 void Vehicle::onRes(const fssim_common::ResStateConstPtr &msg) {
@@ -282,7 +281,8 @@ double Vehicle::getGaussianNoise(double mean, double var) const {
     return distribution(generator);
 }
 
-void Vehicle::publishCarInfo(const AxleTires &alphaF,
+void Vehicle::publishCarInfo(const State &x_dot,
+                             const AxleTires &alphaF,
                              const AxleTires &alphaR,
                              const AxleTires &FyF,
                              const AxleTires &FyR,
@@ -291,6 +291,10 @@ void Vehicle::publishCarInfo(const AxleTires &alphaF,
     fssim_common::CarInfo car_info;
     car_info.header.stamp = ros::Time::now();
 
+    car_info.vx = x_dot.v_x;
+    car_info.vy = x_dot.v_y;
+    car_info.r = x_dot.r;
+    
     car_info.alpha_f   = alphaF.avg();
     car_info.alpha_f_l = alphaF.left;
     car_info.alpha_f_r = alphaF.right;

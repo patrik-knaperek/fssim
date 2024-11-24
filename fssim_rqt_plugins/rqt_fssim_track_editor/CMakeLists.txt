@@ -31,6 +31,10 @@ catkin_package()
 
 catkin_python_setup()
 
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+)
+
 catkin_install_python(PROGRAMS scripts/rqt_fssim_track_editor
         DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

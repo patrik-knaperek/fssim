@@ -88,7 +88,8 @@ class Vehicle {
 
     void publishTf(const State &x);
 
-    void publishCarInfo(const AxleTires &alphaF,
+    void publishCarInfo(const State &x_dot,
+                        const AxleTires &alphaF,
                         const AxleTires &alphaR,
                         const AxleTires &FyF,
                         const AxleTires &FyR,
