@@ -22,7 +22,7 @@
 
 cmake_minimum_required(VERSION 3.0.2)
 project(fssim_gazebo_plugins)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 include_directories(include
         ${catkin_INCLUDE_DIRS}
